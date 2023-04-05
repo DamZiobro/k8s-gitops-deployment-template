@@ -1,0 +1,5 @@
+* differentiate getting local registry IP address for different CLUSTER_ENVs
+* allow insecure registry for minikube by default
+* add database using statfulset (use volumes using ex. EBS storage)
+* add istio service mesh and kiali
+* segregate to separate namespaces
