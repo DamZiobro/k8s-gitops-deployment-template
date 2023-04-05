@@ -1,6 +1,6 @@
 appName: k8s-gitops-deployment-fastapi
 websiteHost: k8s-gitops-deployment-fastapi.local
-imageName: localhost:5000/k8s-gitops-deployment-fastapi:0.0.1
+imageName: localhost:5000/k8s-gitops-deployment-fastapi:0.0.2
 replicas: 3
 serviceName: k8s-gitops-deployment-fastapi-service
 sourcePort: 80
