@@ -17,7 +17,7 @@ push: build
 	make -C apps/api push
 
 deploy:
-	make -C deploy/api deploy
+	make -C deploy deploy
 
 undeploy: cluster-up push
 	make -C deploy/api undeploy

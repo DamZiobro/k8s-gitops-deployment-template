@@ -1,4 +1,4 @@
-APP_NAME=k8s-gitops-deployment
+APP_NAME=k8s-gitops-deployment-fastapi
 NAMESPACE=k8s-gitops
 
 deps:
@@ -6,7 +6,7 @@ deps:
 	@kubectl version &> /dev/null || (echo "ERROR: Please install kubectl..." && false)
 
 deploy: deps ## deploy helm chart
-	helm upgrade --atomic --install $(APP_NAME) --namespace=$(NAMESPACE) --create-namespace api
+	helm upgrade --atomic --install $(APP_NAME) --namespace=$(NAMESPACE) --create-namespace $(APP_NAME)
 
 undeploy: deps ## deletes project using k8s
 	helm uninstall $(APP_NAME) || true
@@ -17,4 +17,4 @@ rollback: deps ## rollback to the previuos deployment version
 status-deploy: deps ## show status of k8s deployment
 	@echo "============== K8S DEPLOYMENTS ==================="
 	helm status $(APP_NAME)
-	kubectl get all -l app=$(APP_NAME)
+	kubectl get all -l app=$(APP_NAME) -n $(NAMESPACE)

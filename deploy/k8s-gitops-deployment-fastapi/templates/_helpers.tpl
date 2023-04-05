@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "api.name" -}}
+{{- define "k8s-gitops-deployment-fastapi.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "api.fullname" -}}
+{{- define "k8s-gitops-deployment-fastapi.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "api.chart" -}}
+{{- define "k8s-gitops-deployment-fastapi.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "api.labels" -}}
-helm.sh/chart: {{ include "api.chart" . }}
-{{ include "api.selectorLabels" . }}
+{{- define "k8s-gitops-deployment-fastapi.labels" -}}
+helm.sh/chart: {{ include "k8s-gitops-deployment-fastapi.chart" . }}
+{{ include "k8s-gitops-deployment-fastapi.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "api.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "api.name" . }}
+{{- define "k8s-gitops-deployment-fastapi.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "k8s-gitops-deployment-fastapi.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "api.serviceAccountName" -}}
+{{- define "k8s-gitops-deployment-fastapi.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "api.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "k8s-gitops-deployment-fastapi.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
