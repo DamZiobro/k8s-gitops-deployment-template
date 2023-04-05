@@ -1,15 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "k8s-gitops-deployment-fastapi.fullname" . }}
   labels:
-    {{- include "k8s-gitops-deployment-fastapi.labels" . | nindent 4 }}
+    app: {{ .Values.appName }}
+  name: {{ .Values.serviceName }} 
 spec:
-  type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+  - name: 80-80
+    port: {{ .Values.sourcePort }}
+    protocol: TCP
+    targetPort: 80
   selector:
-    {{- include "k8s-gitops-deployment-fastapi.selectorLabels" . | nindent 4 }}
+    app: {{ .Values.appName }}
+  type: ClusterIP
+status:
+  loadBalancer: {}
