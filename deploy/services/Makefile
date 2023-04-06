@@ -16,6 +16,7 @@ deploy: deps ## deploy helm chart
 argo-deploy: deps
 	argocd app create $(APP_NAME) --repo $(GIT_APP_URL) --path $(GIT_APP_PATH) --dest-server https://kubernetes.default.svc --dest-namespace $(APP_NAMESPACE)
 	argocd app sync $(APP_NAME)
+	argocd app set $(APP_NAME) --sync-policy automated
 
 undeploy: deps ## deletes project using k8s
 	helm uninstall $(APP_NAME) -n $(APP_NAMESPACE) || true
