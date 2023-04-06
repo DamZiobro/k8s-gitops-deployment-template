@@ -5,16 +5,16 @@ APP_NAME=k8s-gitops-deployment
 deps:
 	make -C infrastructure/$(CLUSTER_ENV) deps
 	make -C infrastructure/api deps
-	make -C deploy/api deps
+	make -C deploy/services deps
 
 cluster-up:
 	make -C infrastructure/$(CLUSTER_ENV) cluster-up
 
 build:
-	make -C apps/api build
+	make -C services/api build
 
 push: build
-	make -C apps/api push
+	make -C services/api push
 
 deploy:
 	make -C deploy deploy
