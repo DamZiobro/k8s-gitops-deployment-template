@@ -2,9 +2,9 @@ apiVersion: v2
 name: k8s-gitops-deployment-fastapi
 description: FastAPI deployment helm chart
 type: application
-version: 0.0.2
+version: 0.0.3
 deprecated: false
-appVersion: 0.0.2
+appVersion: 0.0.3
 maintainers:
   - email: damian@xmementoit.com
     name: DamianZiobro
