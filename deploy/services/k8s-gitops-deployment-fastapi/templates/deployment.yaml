@@ -20,12 +20,4 @@ spec:
         name: {{ .Values.appName }}-{{ randAlphaNum 5 | lower }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
         resources: {}
-        livenessProbe:
-          httpGet:
-            path: /
-            port: http
-        readinessProbe:
-          httpGet:
-            path: /
-            port: http
 status: {}
