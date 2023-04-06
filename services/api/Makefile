@@ -1,4 +1,4 @@
-APP_NAME=k8s-gitops-deployment
+APP_NAME ?= k8s-gitops-deployment
 
 APP_LOCAL_PORT ?= 3000
 DOCKER_REG_PORT ?= 5000
