@@ -14,3 +14,7 @@ async def _startup():
 @app.get("/")
 async def read_root():
     return {"message": "Hello New World"}
+
+@app.get("/user/{username}")
+async def user_root(username):
+    return {"message": f"Hello {username}"}

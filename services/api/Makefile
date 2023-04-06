@@ -5,7 +5,7 @@ DOCKER_REG_PORT ?= 5000
 DOCKER_REG_IP ?=localhost
 DOCKER_REG_URL ?= $(DOCKER_REG_IP):$(DOCKER_REG_PORT)
 DOCKER_IMAGE_NAME=k8s-gitops-deployment-fastapi
-IMAGE_VERSION ?= 0.0.2
+IMAGE_VERSION ?= 0.0.3
 
 #=========================================================
 # LOCAL DEV docker commands
