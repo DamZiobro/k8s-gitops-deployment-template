@@ -13,15 +13,17 @@ deps:
 cluster-up: ## set up k8s cluster
 	make -C infrastructure/$(CLUSTER_ENV) cluster-up
 
-argo-login:
-	make -C deploy/argocd argo-login
-
 argo-setup: ## setup ArgoCD server
 	make -C deploy/argocd deploy
 	make -C deploy/argocd argo-setup
 
+argo-login:
+	make -C deploy/argocd argo-login
+
 dist-clean:
 	make -C infrastructure/$(CLUSTER_ENV) cluster-down
+	make -C deploy/argocd clean
+	make -C deploy/services clean
 
 ##############################################################################
 # APP DEVELOPMENT COMMANDS

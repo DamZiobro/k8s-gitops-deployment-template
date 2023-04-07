@@ -37,6 +37,7 @@ argo-deps:
 	@touch $@
 
 argo-setup: argo-deps
+	kubectl create namespace $(APP_NAMESPACE) --dry-run=client -o yaml | kubectl apply -f -
 	argocd app create $(APP_NAME) --repo $(GIT_APP_URL) --path $(GIT_APP_PATH) --dest-server https://kubernetes.default.svc --dest-namespace $(APP_NAMESPACE)
 	argocd app sync $(APP_NAME)
 	argocd app set $(APP_NAME) --sync-policy automated
@@ -57,3 +58,6 @@ argo-status-deploy: helm-deps ## show status of k8s deployment
 
 smoke-test:
 	curl -H "Host: k8s-gitops-deployment-fastapi.info" http://$(shell minikube ip)/
+
+clean:
+	rm -rf argo-setup argo-deps helm-deps

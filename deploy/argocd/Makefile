@@ -37,7 +37,7 @@ status-deploy: deps ## show status of k8s deployment
 smoke-test:
 	curl http://$(ARGOCD_URL)
 
-argo-login:
+argo-login: up
 	@argocd login $(ARGOCD_URL) --insecure --username admin --password $(ARGO_ADMIN_PASSWORD)
 
 argo-setup: deploy
@@ -45,3 +45,6 @@ argo-setup: deploy
 	@argocd account update-password --account admin --current-password $(shell kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d) --new-password $(ARGO_ADMIN_PASSWORD)
 	argocd cluster add $(CLUSTER_NAME) --yes
 	@touch $@
+
+clean:
+	rm -rf argo-setup deploy deps
