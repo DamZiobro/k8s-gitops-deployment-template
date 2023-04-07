@@ -52,5 +52,8 @@ argo-undeploy: argo-deps
 argo-rollback: argo-deps
 	argocd app rollback $(APP_NAME)
 
+argo-status-deploy: helm-deps ## show status of k8s deployment
+	argocd app get $(APP_NAME)
+
 smoke-test:
 	curl -H "Host: k8s-gitops-deployment-fastapi.info" http://$(shell minikube ip)/
