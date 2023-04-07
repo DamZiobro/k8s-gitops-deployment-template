@@ -6,8 +6,26 @@ deps:
 	make -C infrastructure/api deps
 	make -C deploy/services deps
 
+##############################################################################
+# CLUSTER CONFIG
+##############################################################################
+
 cluster-up: ## set up k8s cluster
 	make -C infrastructure/$(CLUSTER_ENV) cluster-up
+
+argo-login:
+	make -C deploy/argocd argo-login
+
+argo-setup: ## setup ArgoCD server
+	make -C deploy/argocd deploy
+	make -C deploy/argocd argo-setup
+
+dist-clean:
+	make -C infrastructure/$(CLUSTER_ENV) cluster-down
+
+##############################################################################
+# APP DEVELOPMENT COMMANDS
+##############################################################################
 
 build: ## build docker image
 	make -C services/api build
@@ -15,26 +33,29 @@ build: ## build docker image
 push: build ## push docker image do docker registry
 	make -C services/api push
 
-argo-setup: ## setup ArgoCD server
-	make -C deploy/argocd deploy
-	make -C deploy/argocd argo-setup
+##############################################################################
+# APP CONFIG / COMMANDS
+##############################################################################
 
 argo-deploy: ## deploy using ArgoCD using GitOps rules
 	make -C deploy/services argo-deploy
 
 argo-undeploy:
-	make -C deploy/argocd undeploy
+	make -C deploy/services argo-undeploy
 
-deploy: ## deploy using helm
-	make -C deploy/services deploy
+argo-rollback:
+	make -C deploy/services argo-rollback
 
-undeploy:
-	make -C deploy/services undeploy
+helm-deploy: ## deploy using helm
+	make -C deploy/services helm-deploy
+
+helm-undeploy: ## undeploy using helm
+	make -C deploy/services helm-undeploy
+
+helm-rollback:
+	make -C deploy/services helm-rollback
 
 smoke-test:
 	make -C deploy/services smoke-test
-
-dist-clean:
-	make -C infrastructure/$(CLUSTER_ENV) cluster-down
 
 .PHONY: deploy

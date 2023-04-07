@@ -19,6 +19,9 @@ deploy: deps ## deploy helm chart
 	@kubectl port-forward service/argocd-server -n argocd $(ARGOCD_PORT):443 &
 	@touch $@
 
+up: deps ## make argo server up and running
+	@kubectl port-forward service/argocd-server -n argocd $(ARGOCD_PORT):443 &
+
 undeploy: deps ## deletes project using k8s
 	helm uninstall $(APP_NAME) -n $(ARGO_NAMESPACE) || true
 	rm -rf deploy deps argo-setup
@@ -33,6 +36,9 @@ status-deploy: deps ## show status of k8s deployment
 
 smoke-test:
 	curl http://$(ARGOCD_URL)
+
+argo-login:
+	@argocd login $(ARGOCD_URL) --insecure --username admin --password $(ARGO_ADMIN_PASSWORD)
 
 argo-setup: deploy
 	@argocd login $(ARGOCD_URL) --insecure --username admin --password $(shell kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
